@@ -8,7 +8,6 @@ exports.apiGetPostsByUsername = async function (req, res) {
   try {
     let authorDoc = await User.findByUsername(req.params.username);
     let posts = await Post.findByAuthorId(authorDoc._id);
-    //res.header("Cache-Control", "max-age=10").json(posts)
     res.json(posts);
   } catch (e) {
     res.status(500).send("Sorry, invalid user requested.");
@@ -54,7 +53,7 @@ exports.apiLogin = function (req, res) {
             _id: user.data._id,
             username: user.data.username,
           },
-          process.env.JWTSECRET,
+          process.env.CRET,
           { expiresIn: tokenLasts }
         ),
         username: user.data.username,
